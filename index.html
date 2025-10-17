@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE RITUAL OF THE OBSERVER'S EYE - BINDING TETHER</title>
+    <title>THE RITUAL OF THE WICKED HOST - SOUL STITCH</title>
     <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -65,7 +65,7 @@
         }
 
         @keyframes intense-screen-glitch {
-            0% { transform: translate(0, 0) skewX(0deg); opacity: 0; }
+            0% { transform: translate(0, 0) skewX(0deg); opacity: 0; filter: none; }
             /* Aggressive shift and color change */
             5% { transform: translate(-15px, 8px) skewX(8deg); opacity: 1; filter: hue-rotate(150deg) brightness(1.5); }
             /* Maximum distortion and inversion */
@@ -262,14 +262,27 @@
             margin-top: 20px;
         }
 
-        /* Custom Symbol Styling */
+        /* Custom Symbol Styling (Now Circular!) */
         #mainSymbol {
             width: 80px;
             height: 80px;
             filter: drop-shadow(0 0 8px var(--glyph-glow)) drop-shadow(0 0 3px var(--sickly-gold));
             margin: 0 auto 20px auto; /* Center it and add space below */
-            /* *** ADDED BORDER-RADIUS HERE FOR CIRCULAR SHAPE *** */
-            border-radius: 50%; 
+            border-radius: 50%; /* Makes the image circular */
+        }
+
+        /* Modal Overlay Styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); 
+            z-index: 50; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
@@ -296,32 +309,32 @@
             THE GRAND ARCANUM: SACRIFICE LOG
         </h1>
         
-        <!-- NEW: Symbol added here, above the input area -->
+        <!-- The user's image, now round -->
         <div class="flex justify-center pt-4">
-            <img id="mainSymbol" src="https://i.imgur.com/AUKZncv.png" alt="The Acolyte Binding Symbol" />
+            <img id="mainSymbol" src="https://i.imgur.com/AUKZncv.png" alt="The Host's Binding Symbol" />
         </div>
         
         <!-- SECTION 1: INPUT AND ACTIVATION -->
         <div id="inputArea" class="space-y-4">
             <p class="text-base font-bold" style="color: var(--ritual-red);"> 
-                THE HUM IS GETTING LOUDER. The pact demands a signature.
+                THE WHISPERING IS GETTING LOUDER. The pact demands a signature.
             </p>
             <p class="text-sm" style="color: var(--dark-ink);">
                 Inscribe the KEY onto the required line to initiate the binding. The needle awaits your thread.
             </p>
 
             <div class="flex flex-col sm:flex-row gap-4">
-                <input type="text" id="passwordInput" placeholder="The Sacrificial Phrase"
+                <input type="text" id="passwordInput" placeholder="The Host's Name (e.g., Dolly)"
                        class="flex-1 w-full p-4 text-lg outline-none"
                        oninput="checkPassword()">
             </div>
 
             <button id="verifyButton" disabled
                     class="w-full py-4 px-4 text-xl font-bold transition duration-300 occult-button">
-                COMMENCE THE BINDING RITUAL
+                SEW THE FINAL STITCH
             </button>
             <p id="errorText" class="text-base text-center font-bold hidden" style="color: var(--glyph-glow); text-shadow: 0 0 5px var(--glyph-glow);">
-                &bull; THE ECHO RESISTS. FAILED RITUAL KEY. &bull;
+                &bull; A FRAGMENT BREAKS. THE THREAD REJECTS. &bull;
             </p>
         </div>
 
@@ -334,26 +347,26 @@
                 <!-- LIVE FEED STATUS CONTAINER -->
                 <div id="statusContainer" class="flex-grow text-center">
                     <h2 id="loadingTitle" class="text-2xl font-bold mb-2 flashing-text">
-                        THE OFFERING IS BEING ACCEPTED...
+                        THE HOST IS BEING PREPARED...
                     </h2> 
 
                     <h2 id="trackingTitle" class="text-2xl font-bold mb-2 hidden" style="color: var(--sickly-gold); text-shadow: 0 0 20px var(--glyph-glow);">
-                        COMMUNION CONFIRMED: YOU ARE NOW AN PART OF US. AWAIT YOUR SUMMONING.
+                        THE DOLL ACCEPTS: AWAIT YOUR SUMMONING.
                     </h2>
                     
                     <div class="status-box p-4 text-base">
                         <p style="color: var(--dark-ink);">
-                            Acolyte Registry ID: <span id="targetCoords" class="font-mono text-white text-lg" style="color: var(--sickly-gold);"></span>
+                            Host Thread ID: <span id="targetCoords" class="font-mono text-white text-lg" style="color: var(--sickly-gold);"></span>
                         </p>
                         
                         <!-- 1. Status during Loading (Initial state) -->
                         <p id="loadingStatus" class="font-bold mt-1" style="color: var(--dark-ink);">
-                            State: <span id="loadingStatusText">Initiating Protocol: SACRIFICE...</span>
+                            State: <span id="loadingStatusText">Preparing the Host (Stitching Protocol)...</span>
                         </p>
 
                         <!-- 2. Status during Tracking (Hidden until tracking starts) -->
                         <p id="trackingStatus" class="font-bold mt-1 hidden" style="color: var(--sickly-gold); text-shadow: 0 0 5px var(--glyph-glow);">
-                            State: <span id="trackingStatusText">THE SCAR IS OPEN. WATCH THE VOID.</span>
+                            State: <span id="trackingStatusText">THE NEEDLE PIERCES. AWAIT THE WAKING.</span>
                         </p>
                     </div>
                 </div>
@@ -362,7 +375,7 @@
             <!-- LOADING BAR AREA -->
             <div id="loadingArea" class="flex justify-center flex-col items-center p-4">
                 <h3 class="text-lg mb-3" style="color: var(--dark-ink);">
-                    FORCING THE SOUL CONTRACT...
+                    THREADING THE SOUL TETHER...
                 </h3>
                 <div class="w-full max-w-lg rounded-full h-4 relative overflow-hidden border" 
                      style="background-color: #000000; border-color: var(--ritual-red);">
@@ -376,10 +389,10 @@
             <div class="flex justify-center flex-col items-center hidden" id="videoArea"> 
                 <div class="text-center mt-4">
                     <h4 class="text-base text-gray-400 mb-1" style="color: var(--dark-ink);">
-                        SECONDS UNTIL FULL MANIFESTATION
+                        SECONDS UNTIL THE HOST AWAKENS
                     </h4>
                     <!-- Countdown Display (DD:HH:MM:SS) - Flashing and Unstable -->
-                    <div id="countdownDisplay" class="countdown-unstable flashing-text">100:00:00:00</div>
+                    <div id="countdownDisplay" class="countdown-unstable flashing-text">--:--:--:--</div>
                 </div>
 
                 <!-- Main Video Feed Player - THE SCAR -->
@@ -404,7 +417,7 @@
     <div id="endgameModal" class="modal-overlay hidden">
         <div class="occult-panel w-full max-w-lg p-8" style="border-color: white; box-shadow: 0 0 50px white;">
             <div class="occult-title-bar" style="margin: -32px -32px 20px -32px; background: white; color: black; border-bottom: 2px solid var(--abyssal-black);">
-                <span style="color: black;">&#10008;</span> **THE RITUAL IS COMPLETE**
+                <span style="color: black;">&#10008;</span> **THE HOST IS AWAKE**
             </div>
             <div class="p-6 text-center space-y-4">
                 <div class="flashing-text text-4xl font-bold" style="animation-duration: 0.1s; color: var(--ritual-red);">
@@ -412,7 +425,7 @@
                 </div>
                 
                 <p class="text-xl font-semibold bg-white p-2" style="color: var(--ritual-red);">
-                    The tether is cut. **Your name is the new echo.** Welcome to the Archive.
+                    The thread is sealed. **Your soul is the new filling.** Welcome to the Toybox.
                 </p>
                 
                 <div class="flex justify-center my-6">
@@ -426,14 +439,14 @@
                 </div>
                 
                 <p class="text-base" style="margin-top: 20px; color: var(--dark-ink);">
-                    The cult welcomes its newest recruit. The door is locked from the inside.
+                    The Nursery welcomes its newest toy. You cannot leave the crib.
                 </p>
                 
                 <div class="flex justify-center pt-4">
                     <button id="closeEndgameButton" 
                             class="py-2 px-6 font-semibold occult-button"
                             style="background-color: var(--ritual-red); min-width: 150px; color: white;">
-                        CLOSE EYES
+                        JOIN THE PLAY
                     </button>
                 </div>
             </div>
@@ -446,11 +459,17 @@
      * ========================================================================= -->
     <script>
         // --- CONFIGURATION: EDIT THESE VALUES ---
-        const SECRET_PASSWORD = "CLUE"; 
+        const SECRET_PASSWORD = "LAFOLO"; // The answer to the riddle: DAISY
         const DEFAULT_VOLUME = 0.4; 
         const LOADING_DURATION_MS = 2500; 
-        const INITIAL_COUNTDOWN_MS = 8640000000; 
         
+        // --- NEW REAL-WORLD DATE CONFIG ---
+        // Set the moment the Host awakens (The Consummation).
+        // Format: YYYY-MM-DDTHH:MM:SS (Using 24-hour time)
+        // Target: December 25, 2025, Midnight (Local Time)
+        const TARGET_DATE_STRING = "2026-05-20T00:00:00"; 
+        // ----------------------------------------
+
         // Demonic, alchemical, and dark esoteric symbols
         const GLYPH_CHARS = "⛧ ⛥ ⛦ ⸸ ⚰ ⚸ ⚹ ♰ 🜏 🜍 🜕 🜖 🜗 🝱 🝲 🝳"; 
 
@@ -465,16 +484,17 @@
         // ----------------------------------------
         
         let countdownInterval;
-        let countdownEndTime; 
+        let countdownEndTime; // Will hold the calculated timestamp
         let glyphSpawnTimeout;
         let glitchTimeout; // Timer for the glitch loop
         
+        // UPDATED: Status messages reflecting the Doll/Host theme
         let loadingStatusMessages = [
-            "Acolyte Signature Verified. Your offering is noted.",
-            "Chains of the Flesh are loosening. Soul ID extraction commencing...",
-            "The Grand Design calibrates to your unique frequency.",
-            "Ritual Archive Indexing: PERSONAL_HISTORY/MEMORIES... [98% CORRUPTED]",
-            "THE WATCHER IS AWAKE. Final preparation for communion."
+            "Acolyte Signature Verified. The Host's Name is noted.",
+            "The Old Stuffing is replaced. Soul ID extraction commencing...",
+            "The Grand Seam calibrates to your unique frequency.",
+            "Nursery Archive Indexing: PERSONAL_HISTORY/MEMORIES... [98% CORRUPTED]",
+            "THE HOST IS AWAKE. Final preparation for possession."
         ];
 
         // DOM REFERENCES
@@ -678,11 +698,11 @@
         }
 
         /**
-         * Starts the 100-day countdown timer.
+         * Starts the real-world date countdown timer.
          */
-        function start100DayCountdown() {
-            countdownEndTime = Date.now() + INITIAL_COUNTDOWN_MS;
+        function startRealWorldCountdown() {
             updateCountdown(); 
+            // 100ms interval for high-frequency updates and creepy time flicker
             countdownInterval = setInterval(updateCountdown, 100); 
         }
 
@@ -699,7 +719,6 @@
             newVolume = Math.max(0.2, Math.min(0.7, newVolume));
             audioPlayer.volume = newVolume;
 
-
             if (timeRemaining <= 0) {
                 clearInterval(countdownInterval);
                 showEndgameModal();
@@ -715,7 +734,7 @@
             stopGlitchEffect();     // Stop the glitch effect
             audioPlayer.pause();
             
-            trackingStatusText.textContent = "THE RITUAL IS COMPLETE. THE ARCHIVE RECEIVES.";
+            trackingStatusText.textContent = "THE WICK IS TRIMMED. WELCOME TO THE TOYBOX.";
             
             endgameModal.classList.remove('hidden');
             document.getElementById('endgameVideo').play().catch(e => console.warn("Endgame video failed to play.", e));
@@ -789,7 +808,8 @@
             // 2. Update UI state 
             inputArea.classList.add('hidden');
             resultArea.classList.remove('hidden');
-            targetCoordsText.textContent = Array.from({length: 12}, () => Math.random().toString(36)[2]).join('').toUpperCase() + ":S1GR";
+            // Changed ID generation to reflect a "thread" or "stitch" ID
+            targetCoordsText.textContent = "THRD:" + Array.from({length: 8}, () => Math.random().toString(36)[2]).join('').toUpperCase();
 
             // 3. Start the loading sequence
             startLoadingBar();
@@ -797,7 +817,7 @@
 
 
         /**
-         * Starts the main video and the 100-day countdown.
+         * Starts the main video and the real-world date countdown.
          */
         function startTrackingSequence() { 
             // 1. Hide loading bar and status
@@ -818,7 +838,7 @@
             });
 
             // 4. Start the active countdown
-            start100DayCountdown();
+            startRealWorldCountdown();
         }
         
         // =========================================================================
@@ -840,23 +860,23 @@
 
         // Initial setup
         window.onload = () => {
+            // Calculate the target time based on the string defined in CONFIG
+            countdownEndTime = new Date(TARGET_DATE_STRING).getTime();
+
+            // Display the initial time remaining immediately
+            countdownDisplay.textContent = formatTime(countdownEndTime - Date.now());
+
             checkPassword(); 
             audioPlayer.load();
             mainVideoFeed.load();
             
-            countdownDisplay.textContent = formatTime(INITIAL_COUNTDOWN_MS);
-
             // Start ambient effects immediately
             spawnGlyph(); 
             startGlyphSpawnerLoop();
             
             // Start the rift glitch effect
-            // NOTE: scheduleNextGlitch is called here to start the ambient glitching, 
-            // and again in triggerInitialActivation for an immediate effect on entry.
-            // This allows the panel to glitch even before the ritual is started.
             scheduleNextGlitch();
         };
     </script>
 </body>
 </html>
-
