@@ -312,7 +312,7 @@
         
         <!-- The user's image, now round -->
         <div class="flex justify-center pt-4">
-            <img id="mainSymbol" src="https://i.imgur.com/0GAQkVd.png" alt="The Host's Binding Symbol" />
+            <img id="mainSymbol" src="https://i.imgur.com/AUKZncv.png" alt="The Host's Binding Symbol" />
         </div>
         
         <!-- SECTION 1: INPUT AND ACTIVATION -->
@@ -396,8 +396,8 @@
                     <div id="countdownDisplay" class="countdown-unstable flashing-text">--:--:--:--</div>
                 </div>
 
-                <!-- Main Video Feed Player - THE SCAR (Poster Removed) -->
-                <video id="mainVideoFeed" autoplay loop muted playsinline controls
+                <!-- Main Video Feed Player - THE SCAR (Removed autoplay) -->
+                <video id="mainVideoFeed" loop muted playsinline controls
                        class="rounded-md"
                        style="border: 10px solid var(--sickly-gold); box-shadow: 0 0 30px var(--glyph-glow); background-color: black;">
                     <source id="mainVideoSource" src="https://www.dropbox.com/scl/fi/i0ccb5q6fdgwevp8cy2nz/ARG-video.mp4?rlkey=gfn6df819batrwe9xgfpnutbq&st=uvzs5axp&dl=1" type="video/mp4">
@@ -428,8 +428,8 @@
                 </p>
                 
                 <div class="flex justify-center my-6">
-                    <!-- Endgame Video (Poster Removed) -->
-                    <video id="endgameVideo" autoplay loop muted playsinline controls
+                    <!-- Endgame Video (Removed autoplay) -->
+                    <video id="endgameVideo" loop muted playsinline controls
                            class="w-full max-w-xs border-5 border-red-600" style="border-radius: 0; box-shadow: 0 0 30px var(--glyph-glow);">
                         <source src="https://www.dropbox.com/scl/fi/i0ccb5q6fdgwevp8cy2nz/ARG-video.mp4?rlkey=gfn6df819batrwe9xgfpnutbq&st=uvzs5axp&dl=1" type="video/mp4">
                         Your browser does not support the video tag.
@@ -735,6 +735,7 @@
             trackingStatusText.textContent = "THE WICK IS TRIMMED. WELCOME TO THE TOYBOX.";
             
             endgameModal.classList.remove('hidden');
+            // Ensure play is called on user interaction for mobile compatibility
             document.getElementById('endgameVideo').play().catch(e => console.warn("Endgame video failed to play.", e));
         }
 
@@ -830,6 +831,7 @@
             trackingTitle.classList.remove('hidden'); 
             
             // 3. Start main video playback
+            // This explicit .play() call should be honored since the user clicked the button
             mainVideoFeed.play().catch(e => {
                 console.warn("Main video autoplay failed. Showing error message.", e);
                 videoErrorText.classList.remove('hidden'); 
@@ -880,4 +882,3 @@
     </script>
 </body>
 </html>
-
